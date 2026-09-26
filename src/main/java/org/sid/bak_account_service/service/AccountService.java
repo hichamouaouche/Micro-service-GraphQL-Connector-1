@@ -5,5 +5,5 @@ import org.sid.bak_account_service.dto.BankAccountResponseDTO;
 import org.sid.bak_account_service.entities.BankAccount;
 
 public interface AccountService {
-    public BankAccountResponseDTO addAccount(BankAccountRequestDTO bankAccountDTO);
+    BankAccountResponseDTO addAccount(BankAccountRequestDTO bankAccountDTO);
 }
