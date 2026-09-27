@@ -1,6 +1,5 @@
 package org.sid.bak_account_service.service;
 
-import io.swagger.v3.oas.annotations.servers.Server;
 import jakarta.transaction.Transactional;
 import org.sid.bak_account_service.dto.BankAccountRequestDTO;
 import org.sid.bak_account_service.dto.BankAccountResponseDTO;
@@ -24,6 +23,21 @@ public class AccountServiceImpl implements AccountService {
     public BankAccountResponseDTO addAccount(BankAccountRequestDTO bankAccountDTO) {
         BankAccount bankAccount = BankAccount.builder()
                 .id(UUID.randomUUID().toString())
+                .createdAt(new Date())
+                .balance(bankAccountDTO.getBalance())
+                .type(bankAccountDTO.getType())
+                .currency(bankAccountDTO.getCurrency())
+                .build();
+        BankAccount saveBankAccount = bankAccountRepository.save(bankAccount);
+        BankAccountResponseDTO bankAccountResponseDTO = accountMapper.fromBankAccount(saveBankAccount);
+        return bankAccountResponseDTO;
+    }
+
+
+    @Override
+    public BankAccountResponseDTO updateAccount(String id, BankAccountRequestDTO bankAccountDTO) {
+        BankAccount bankAccount = BankAccount.builder()
+                .id(id)
                 .createdAt(new Date())
                 .balance(bankAccountDTO.getBalance())
                 .type(bankAccountDTO.getType())
